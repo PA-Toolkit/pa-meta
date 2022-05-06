@@ -9,7 +9,7 @@ function parseDateString(date: string): Date {
   const [, year, month, day, hour, minute, second] = match;
   return new Date(
     parseInt(year),
-    parseInt(month),
+    parseInt(month) - 1,
     parseInt(day),
     parseInt(hour),
     parseInt(minute),

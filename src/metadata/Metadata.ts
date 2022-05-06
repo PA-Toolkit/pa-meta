@@ -1,10 +1,10 @@
 import { Serializable } from "pa-common";
-import { Artist, CreateArtist } from "./artist";
-import { Beatmap } from "./beatmap";
+import { Artist, ArtistConstructor, CreateArtist } from "./artist";
+import { Beatmap, BeatmapConstructor } from "./beatmap";
 import { CreateBeatmap } from "./beatmap/Helpers";
-import { CreateCreator, Creator } from "./creator";
+import { CreateCreator, Creator, CreatorConstructor } from "./creator";
 import { MetadataConstructor } from "./MetadataConstructor";
-import { CreateSong, Song } from "./song";
+import { CreateSong, Song, SongConstructor } from "./song";
 
 /**
  * The metadata of the Project Arrhythmia level, the base of the library.
@@ -22,8 +22,8 @@ export class Metadata implements Serializable {
     return this._artist;
   }
 
-  public set artist(value: Artist) {
-    this._artist = value;
+  public set artist(value: Artist | ArtistConstructor) {
+    this._artist.fromJson(value);
   }
 
   /**
@@ -33,8 +33,8 @@ export class Metadata implements Serializable {
     return this._creator;
   }
 
-  public set creator(value: Creator) {
-    this._creator = value;
+  public set creator(value: Creator | CreatorConstructor) {
+    this._creator.fromJson(value);
   }
 
   /**
@@ -44,8 +44,8 @@ export class Metadata implements Serializable {
     return this._song;
   }
 
-  public set song(value: Song) {
-    this._song = value;
+  public set song(value: Song | SongConstructor) {
+    this._song.fromJson(value);
   }
 
   /**
@@ -55,38 +55,38 @@ export class Metadata implements Serializable {
     return this._beatmap;
   }
 
-  public set beatmap(value: Beatmap) {
-    this._beatmap = value;
+  public set beatmap(value: Beatmap | BeatmapConstructor) {
+    this._beatmap.fromJson(value);
   }
 
   fromJson(json: MetadataConstructor) {
     if (json.artist) {
-      this.artist.fromJson(json.artist);
+      this._artist.fromJson(json.artist);
     }
     if (json.creator) {
-      this.creator.fromJson(json.creator);
+      this._creator.fromJson(json.creator);
     }
     if (json.song) {
-      this.song.fromJson(json.song);
+      this._song.fromJson(json.song);
     }
     if (json.beatmap) {
-      this.beatmap.fromJson(json.beatmap);
+      this._beatmap.fromJson(json.beatmap);
     }
   }
 
   toJson(): MetadataConstructor {
     const json = {} as MetadataConstructor;
     if (this.artist) {
-      json.artist = this.artist.toJson();
+      json.artist = this._artist.toJson();
     }
     if (this.creator) {
-      json.creator = this.creator.toJson();
+      json.creator = this._creator.toJson();
     }
     if (this.song) {
-      json.song = this.song.toJson();
+      json.song = this._song.toJson();
     }
     if (this.beatmap) {
-      json.beatmap = this.beatmap.toJson();
+      json.beatmap = this._beatmap.toJson();
     }
     return json;
   }
