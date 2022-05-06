@@ -73,6 +73,10 @@ export class Creator implements Serializable {
     return json;
   }
 
+  toString(): string {
+    return JSON.stringify(this.toJson());
+  }
+
   constructor(json: CreatorConstructor) {
     this.fromJson(json);
   }
