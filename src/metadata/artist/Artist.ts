@@ -83,11 +83,17 @@ export class Artist implements Serializable {
   }
 
   toJson(): ArtistConstructor {
-    return {
-      name: this.name,
-      link: this.link,
-      linkType: this.linkType,
-    };
+    const json = {} as ArtistConstructor;
+    if (this.name !== undefined) {
+      json.name = this.name;
+    }
+    if (this.link !== undefined) {
+      json.link = this.link;
+    }
+    if (this.linkType !== undefined) {
+      json.linkType = this.linkType.toString();
+    }
+    return json;
   }
 
   toString(): string {
