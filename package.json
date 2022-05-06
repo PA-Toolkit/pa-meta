@@ -1,0 +1,49 @@
+{
+  "name": "pa-meta",
+  "version": "2.2.0",
+  "description": "Creates and modifies Project Arrhythmia metadata.lsb files.",
+  "main": "build/index.js",
+  "scripts": {
+    "build": "rollup -c --environment BUILD:production",
+    "dev": "rollup -c",
+    "watch": "rollup -cw",
+    "test": "node test/test.js",
+    "lint": "eslint --ignore-path .eslintignore --ext .js,.ts .",
+    "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\""
+  },
+  "files": [
+    "build/**/*"
+  ],
+  "keywords": [
+    "pa",
+    "project arrhythmia",
+    "meta",
+    "metadata"
+  ],
+  "author": "enchart",
+  "license": "MIT",
+  "homepage": "https://github.com/PA-Toolkit/pa-meta",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PA-Toolkit/pa-meta"
+  },
+  "bugs": {
+    "url": "https://github.com/PA-Toolkit/pa-meta/issues"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.18.0",
+    "@typescript-eslint/parser": "^5.18.0",
+    "eslint": "^8.12.0",
+    "eslint-config-prettier": "^8.5.0",
+    "prettier": "^2.6.2",
+    "rollup": "^2.71.1",
+    "rollup-plugin-delete": "^2.0.0",
+    "rollup-plugin-terser": "^7.0.2",
+    "rollup-plugin-ts": "^2.0.7",
+    "tslib": "^2.4.0",
+    "typescript": "^4.6.4"
+  },
+  "dependencies": {
+    "pa-common": "^1.1.3"
+  }
+}
