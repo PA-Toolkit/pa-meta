@@ -1,6 +1,6 @@
 {
   "name": "pa-meta",
-  "version": "2.2.0",
+  "version": "1.0.0",
   "description": "Creates and modifies Project Arrhythmia metadata.lsb files.",
   "main": "build/index.js",
   "scripts": {
