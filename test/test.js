@@ -19,8 +19,10 @@ const metadata = CreateMetadata({
     linkType: LinkType.Spotify,
   },
   beatmap: CreateBeatmap({
+    // Assigning using Beatmap fields
     dateEdited: Date.now(),
-    gameVersion: "20.4.4",
+    // Assigning using serialized fields
+    game_version: "20.4.4",
   }),
 });
 
