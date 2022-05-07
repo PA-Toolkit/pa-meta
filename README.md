@@ -359,6 +359,10 @@ const json = JSON.parse(jsonString);
 const metadata = CreateMetadata(json);
 ```
 
+## Author
+
+- Github: [@PA-Toolkit](https://github.com/PA-Toolkit)
+
 ## 🤝 Contributing
 
 Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](https://github.com/PA-Toolkit/pa-meta/issues).
