@@ -136,7 +136,7 @@ export class Beatmap implements Serializable {
   toJson(): BeatmapConstructor {
     const json: BeatmapConstructor = {};
     if (this.dateEdited !== undefined) {
-      json.date_edited = BeatmapUtils.dateToString(this.dateEdited);
+      json.date_edited = this.dateString();
     }
     if (this.versionNumber !== undefined) {
       json.version_number = this.versionNumber.toString();
