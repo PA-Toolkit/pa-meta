@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
-    "target": "ES5",
+    "lib": ["ES2017"],
+    "target": "ES6",
     "declaration": true
   },
   "include": ["src"],
