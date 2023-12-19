@@ -62,16 +62,16 @@ const metadata = CreateMetadata({
 With default values:
 
 ```js
-const artist = CreateArtist();
+const artist = new Artist();
 ```
 
 With specified values:
 
 ```js
-const artist = CreateArtist({
+const artist = new Artist({
   name: "Artist name",
   link: "artistLink",
-  linkType: LinkType.SoundCloud /* OR */ 1 /* OR */ "1",
+  linkType: LinkType.SoundCloud,
 });
 ```
 
@@ -176,7 +176,7 @@ metadata.song = { ... };
 
 Getting values:
 
-- As Artist, Creator etc. instances
+- As class instances
 
 ```js
 metadata.artist; // [Artist]
@@ -201,7 +201,7 @@ Setting values:
 ```js
 artist.name = "Artist name";
 artist.link = "artistLink";
-artist.linkType = LinkType.SoundCloud /* OR */ 1 /* OR */ "1";
+artist.linkType = LinkType.SoundCloud;
 ```
 
 Getting:

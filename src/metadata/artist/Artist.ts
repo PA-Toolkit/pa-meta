@@ -1,5 +1,5 @@
 import { Serializable } from "pa-common";
-import { ArtistConstructor } from "./ArtistConstructor";
+import { ArtistParams } from "./ArtistParams";
 import { LinkType } from "./Enums";
 import { LinkTypeError } from "./Errors";
 
@@ -7,31 +7,16 @@ import { LinkTypeError } from "./Errors";
  * The song's artist.
  */
 export class Artist implements Serializable {
-  private _name = "Artist";
-  private _link = "meganeko";
   private _linkType: LinkType = 4;
 
   /**
    * The artist's name.
    */
-  public get name(): string {
-    return this._name;
-  }
-
-  public set name(value: string) {
-    this._name = value;
-  }
-
+  name = "Artist";
   /**
    * The artist's music platform name.
    */
-  public get link(): string {
-    return this._link;
-  }
-
-  public set link(value: string) {
-    this._link = value;
-  }
+  link = "meganeko";
 
   /**
    * The artist's music platform.
@@ -48,24 +33,24 @@ export class Artist implements Serializable {
   }
 
   /**
-   * A full URL to the artist's music platform. This depends on `link` and `linkType`. This field is read-only.
+   * Returns a full URL to the artist's music platform. The returned value depends on the values of {@link link} and {@link linkType}.
    */
-  public get url(): string {
+  public getUrl(): string {
     switch (this._linkType) {
       case LinkType.Spotify:
-        return `https://open.spotify.com/artist/${this._link}`;
+        return `https://open.spotify.com/artist/${this.link}`;
       case LinkType.SoundCloud:
-        return `https://soundcloud.com/${this._link}`;
+        return `https://soundcloud.com/${this.link}`;
       case LinkType.Bandcamp:
-        return `https://${this._link}.bandcamp.com`;
+        return `https://${this.link}.bandcamp.com`;
       case LinkType.YoutubeMusic:
-        return `https://www.youtube.com/user/${this._link}`;
+        return `https://www.youtube.com/user/${this.link}`;
       case LinkType.Newgrounds:
-        return `https://${this._link}.newgrounds.com`;
+        return `https://${this.link}.newgrounds.com`;
     }
   }
 
-  fromJson(json: ArtistConstructor) {
+  fromJson(json: any) {
     if (json.name !== undefined) {
       this.name = json.name;
     }
@@ -75,32 +60,29 @@ export class Artist implements Serializable {
     }
 
     if (json.linkType !== undefined) {
-      this.linkType =
-        typeof json.linkType === "string"
-          ? parseInt(json.linkType)
-          : json.linkType;
+      this.linkType = json.linkType;
     }
   }
 
-  toJson(): ArtistConstructor {
-    const json = {} as ArtistConstructor;
-    if (this.name !== undefined) {
-      json.name = this.name;
-    }
-    if (this.link !== undefined) {
-      json.link = this.link;
-    }
-    if (this.linkType !== undefined) {
-      json.linkType = this.linkType.toString();
-    }
-    return json;
+  toJson(): any {
+    return {
+      name: this.name,
+      link: this.link,
+      linkType: this.linkType,
+    };
   }
 
   toString(): string {
     return JSON.stringify(this.toJson());
   }
 
-  constructor(json: ArtistConstructor) {
-    this.fromJson(json);
+  constructor(json?: ArtistParams) {
+    if (json) {
+      this.fromJson({
+        name: json.name,
+        link: json.link,
+        linkType: json.linkType,
+      });
+    }
   }
 }

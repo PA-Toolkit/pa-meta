@@ -1,5 +1,5 @@
 import { Serializable } from "pa-common";
-import { Artist, ArtistConstructor, CreateArtist } from "./artist";
+import { Artist, ArtistParams } from "./artist";
 import { Beatmap, BeatmapConstructor } from "./beatmap";
 import { CreateBeatmap } from "./beatmap/Helpers";
 import { CreateCreator, Creator, CreatorConstructor } from "./creator";
@@ -10,7 +10,7 @@ import { CreateSong, Song, SongConstructor } from "./song";
  * The metadata of the Project Arrhythmia level, the base of the library.
  */
 export class Metadata implements Serializable {
-  private _artist: Artist = CreateArtist();
+  private _artist: Artist = new Artist();
   private _creator: Creator = CreateCreator();
   private _song: Song = CreateSong();
   private _beatmap: Beatmap = CreateBeatmap();
@@ -22,7 +22,7 @@ export class Metadata implements Serializable {
     return this._artist;
   }
 
-  public set artist(value: Artist | ArtistConstructor) {
+  public set artist(value: Artist | ArtistParams) {
     this._artist.fromJson(value);
   }
 

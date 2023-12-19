@@ -1,4 +1,3 @@
 export * from "./Artist";
-export * from "./ArtistConstructor";
+export * from "./ArtistParams";
 export * from "./Enums";
-export * from "./Helpers";
