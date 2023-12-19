@@ -1,6 +1,6 @@
 import { Artist, ArtistParams } from "./artist";
 import { Beatmap, BeatmapConstructor } from "./beatmap";
-import { Creator, CreatorConstructor } from "./creator";
+import { Creator, CreatorParams } from "./creator";
 import { Song, SongConstructor } from "./song";
 
 /**
@@ -8,7 +8,7 @@ import { Song, SongConstructor } from "./song";
  */
 export interface MetadataConstructor {
   artist?: Artist | ArtistParams;
-  creator?: Creator | CreatorConstructor;
+  creator?: Creator | CreatorParams;
   song?: Song | SongConstructor;
   beatmap?: Beatmap | BeatmapConstructor;
 }

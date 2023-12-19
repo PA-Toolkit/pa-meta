@@ -2,7 +2,7 @@ import { Serializable } from "pa-common";
 import { Artist, ArtistParams } from "./artist";
 import { Beatmap, BeatmapConstructor } from "./beatmap";
 import { CreateBeatmap } from "./beatmap/Helpers";
-import { CreateCreator, Creator, CreatorConstructor } from "./creator";
+import { Creator, CreatorParams } from "./creator";
 import { MetadataConstructor } from "./MetadataConstructor";
 import { CreateSong, Song, SongConstructor } from "./song";
 
@@ -11,7 +11,7 @@ import { CreateSong, Song, SongConstructor } from "./song";
  */
 export class Metadata implements Serializable {
   private _artist: Artist = new Artist();
-  private _creator: Creator = CreateCreator();
+  private _creator: Creator = new Creator();
   private _song: Song = CreateSong();
   private _beatmap: Beatmap = CreateBeatmap();
 
@@ -33,7 +33,7 @@ export class Metadata implements Serializable {
     return this._creator;
   }
 
-  public set creator(value: Creator | CreatorConstructor) {
+  public set creator(value: Creator | CreatorParams) {
     this._creator.fromJson(value);
   }
 
