@@ -12,8 +12,8 @@ module.exports = function testArtist() {
   const newArtist = new Artist();
   newArtist.fromJson(newArtistJson);
 
-  const newArtistString = newArtist.toString();
-  if (artistString !== newArtistString) {
+  console.log(`Artist string: ${artistString}`);
+  if (artistString !== newArtist.toString()) {
     throw new Error("Artist test failed!");
   }
 

@@ -7,7 +7,10 @@ import { LinkTypeError } from "./Errors";
  * The song's artist.
  */
 export class Artist implements Serializable {
-  private _linkType: LinkType = 4;
+  /**
+   * The artist's music platform.
+   */
+  linkType: LinkType = 4;
 
   /**
    * The artist's name.
@@ -18,25 +21,21 @@ export class Artist implements Serializable {
    */
   link = "meganeko";
 
-  /**
-   * The artist's music platform.
-   */
-  public get linkType(): LinkType {
-    return this._linkType;
-  }
-
-  public set linkType(value: LinkType) {
-    if (!(value in LinkType)) {
-      throw new LinkTypeError(`Invalid link type: ${value}`);
+  constructor(params?: ArtistParams) {
+    if (params) {
+      this.fromJson({
+        name: params.name,
+        link: params.link,
+        linkType: params.linkType.toString(),
+      });
     }
-    this._linkType = value;
   }
 
   /**
    * Returns a full URL to the artist's music platform. The returned value depends on the values of {@link link} and {@link linkType}.
    */
-  public getUrl(): string {
-    switch (this._linkType) {
+  getUrl(): string {
+    switch (this.linkType) {
       case LinkType.Spotify:
         return `https://open.spotify.com/artist/${this.link}`;
       case LinkType.SoundCloud:
@@ -60,7 +59,11 @@ export class Artist implements Serializable {
     }
 
     if (json.linkType !== undefined) {
-      this.linkType = json.linkType;
+      const linkType = parseInt(json.linkType);
+      if (!(linkType in LinkType)) {
+        throw new LinkTypeError(`Invalid link type: ${json.linkType}`);
+      }
+      this.linkType = linkType;
     }
   }
 
@@ -68,21 +71,11 @@ export class Artist implements Serializable {
     return {
       name: this.name,
       link: this.link,
-      linkType: this.linkType,
+      linkType: this.linkType.toString(),
     };
   }
 
   toString(): string {
     return JSON.stringify(this.toJson());
-  }
-
-  constructor(json?: ArtistParams) {
-    if (json) {
-      this.fromJson({
-        name: json.name,
-        link: json.link,
-        linkType: json.linkType,
-      });
-    }
   }
 }
