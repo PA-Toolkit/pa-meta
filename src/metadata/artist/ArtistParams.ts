@@ -3,7 +3,7 @@ import { LinkType } from "./Enums";
 /**
  * An artist constructor object.
  */
-export interface ArtistConstructor {
+export interface ArtistParams {
   /**
    * The artist's name.
    */
@@ -17,5 +17,5 @@ export interface ArtistConstructor {
   /**
    * The artist's music platform.
    */
-  linkType?: LinkType | string;
+  linkType?: LinkType;
 }

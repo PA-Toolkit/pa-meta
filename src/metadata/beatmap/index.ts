@@ -1,4 +1,3 @@
 export * from "./Beatmap";
-export * from "./BeatmapConstructor";
+export * from "./BeatmapParams";
 export * from "./Utils";
-export * from "./Helpers";

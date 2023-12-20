@@ -25,11 +25,11 @@ npm install pa-meta
 ## Usage
 
 ```js
-import { CreateMetadata, CreateArtist, ... } from "pa-meta";
+import { Metadata, Artist, ... } from "pa-meta";
 ```
 
 ```js
-const { CreateMetadata, CreateArtist, ... } = require("pa-meta");
+const { Metadata, Artist, ... } = require("pa-meta");
 ```
 
 ### Creating
@@ -39,21 +39,17 @@ const { CreateMetadata, CreateArtist, ... } = require("pa-meta");
 With default values:
 
 ```js
-const metadata = CreateMetadata();
+const metadata = new Metadata();
 ```
 
 With specified values:
 
 ```js
-const metadata = CreateMetadata({
-
-  // Using helper functions with constructor objects
-  artist: CreateArtist({ ... }),
-
-  // Using constructor objects directly
-  song: { ... },
-
-  ...
+const metadata = new Metadata({
+  artist: new Artist({
+    /* ... */
+  }),
+  /* ... */
 });
 ```
 
@@ -62,16 +58,16 @@ const metadata = CreateMetadata({
 With default values:
 
 ```js
-const artist = CreateArtist();
+const artist = new Artist();
 ```
 
 With specified values:
 
 ```js
-const artist = CreateArtist({
+const artist = new Artist({
   name: "Artist name",
   link: "artistLink",
-  linkType: LinkType.SoundCloud /* OR */ 1 /* OR */ "1",
+  linkType: LinkType.SoundCloud,
 });
 ```
 
@@ -80,103 +76,72 @@ const artist = CreateArtist({
 With default values:
 
 ```js
-const creator = CreateCreator();
+const creator = new Creator();
 ```
 
 With specified values:
 
 ```js
-const creator = CreateCreator({
+const creator = new Creator({
   steamName: "Name",
-  // OR
-  steam_name: "Name",
-
-  steamId: 0 /* OR */ "0",
-  // OR
-  steam_id: 0 /* OR */ "0",
+  steamId: 471736531,
 });
 ```
-
-NOTE: You can only use either normal or serialized name for a certain field (e.g. either `steamName` or `steam_name`) in a single constructor object.
 
 #### Creating Song
 
 With default values:
 
 ```js
-const song = CreateSong();
+const song = new Song();
 ```
 
 With specified values:
 
 ```js
-const song = CreateSong({
+const song = new Song({
   title: "Song title",
-  difficulty: Difficulty.Easy /* OR */ 0 /* OR */ "0",
+  difficulty: Difficulty.Easy,
   description: "Song description",
-  bpm: 120 /* OR */ "120",
-
-  previewStart: 140 /* OR */ "140",
-  // OR
-  preview_start: 140 /* OR */ "140",
-
-  previewLength: 60 /* OR */ "60",
-  // OR
-  preview_length: 60 /* OR */ "60",
+  bpm: 120,
+  /* ... */
 });
 ```
-
-NOTE: You can only use either normal or serialized name for a certain field (e.g. either `previewStart` or `preview_start`) in a single constructor object.
 
 #### Creating Beatmap
 
 With default values:
 
 ```js
-const beatmap = CreateBeatmap();
+const beatmap = new Beatmap();
 ```
 
 With specified values:
 
 ```js
-const beatmap = CreateBeatmap({
-  dateEdited: "2022-01-01_00.00.00" /* OR */ new Date() /* OR */ Date.now();
-  // OR
-  date_edited: "2022-01-01_00.00.00" /* OR */ new Date() /* OR */ Date.now();
-
-  versionNumber: 0 /* OR */ "0",
-  // OR
-  version_number: 0 /* OR */ "0",
-
+const beatmap = new Beatmap({
+  dateEdited: new Date() /* OR */ Date.now();
   gameVersion: "20.4.4",
-  // OR
-  game_version: "20.4.4",
-
-  workshopID: -1 /* OR */ "-1",
-  // OR
-  workshop_id: -1 /* OR */ "-1",
+  workshopID: -1,
+  /* ... */
 });
 ```
 
-NOTE: You can only use either normal or serialized name for a certain field (e.g. either `dateEdited` or `date_edited`) in a single constructor object.
-
 ### Working
+
+NOTE: `toJson()` and `toString()` return serialized values that PA accepts (e.g. `steam_name` instead of `steamName`).
 
 #### Working with Metadata
 
 Setting values:
 
 ```js
-// Using helper functions with constructor objects
-metadata.artist = CreateArtist({ ... });
-
-// Using constructor objects directly
-metadata.song = { ... };
+metadata.artist = new Artist({ ... });
 ```
 
 Getting values:
 
-- As Artist, Creator etc. instances
+- As class instances
 
 ```js
 metadata.artist; // [Artist]
@@ -201,7 +166,7 @@ Setting values:
 ```js
 artist.name = "Artist name";
 artist.link = "artistLink";
-artist.linkType = LinkType.SoundCloud /* OR */ 1 /* OR */ "1";
+artist.linkType = LinkType.SoundCloud;
 ```
 
 Getting:
@@ -232,7 +197,7 @@ Setting values:
 
 ```js
 creator.steamName = "Name";
-creator.steamId = 0 /* OR */ "0";
+creator.steamId = 0;
 ```
 
 Getting:
@@ -256,19 +221,14 @@ creator.toJson(); // { steam_name: "Name", ... }
 creator.toString(); // "{ steam_name: "Name", ... }"
 ```
 
-NOTE: `toJson()` and `toString()` return serialized values (e.g. `steam_name` instead of `steamName`).
-
 #### Working with Song
 
 Setting values:
 
 ```js
 song.title = "Song title";
-song.difficulty = Difficulty.Easy /* OR */ 0 /* OR */ "0";
-song.description = "Song description";
-song.bpm = 120 /* OR */ "120";
-song.previewStart = 140 /* OR */ "140";
-song.previewLength = 60 /* OR */ "60";
+song.difficulty = Difficulty.Easy;
+song.bpm = 120;
 ```
 
 Getting:
@@ -296,17 +256,14 @@ song.toJson(); // { title: "Song title", ... }
 song.toString(); // "{ title: "Song title", ... }"
 ```
 
-NOTE: `toJson()` and `toString()` return serialized values (e.g. `preview_start` instead of `previewStart`).
-
 #### Working with Beatmap
 
 Setting values:
 
 ```js
-beatmap.dateEdited = "2022-01-01_00.00.00" /* OR */ new Date() /* OR */ Date.now();
-beatmap.versionNumber = 0 /* OR */ "0";
+beatmap.dateEdited = new Date() /* OR */ Date.now();
+beatmap.versionNumber = 0;
 beatmap.gameVersion = "20.4.4";
-beatmap.workshopID = -1 /* OR */ "-1";
 ```
 
 Getting:
@@ -319,7 +276,7 @@ beatmap.versionNumber; // 0
 beatmap.gameVersion; // "20.4.4"
 beatmap.workshopID; // -1
 
-beatmap.dateString(); // "2022-01-01_00.00.00"
+beatmap.getDateString(); // "2022-01-01_00.00.00"
 ```
 
 - JSON object
@@ -333,8 +290,6 @@ beatmap.toJson(); // { date_edited: "2022-01-01_00.00.00", ... }
 ```js
 beatmap.toString(); // "{ date_edited: "2022-01-01_00.00.00", ... }"
 ```
-
-NOTE: `toJson()` and `toString()` return serialized values (e.g. `date_edited` instead of `dateEdited`).
 
 ### Building the metadata
 
@@ -351,12 +306,13 @@ fs.writeFileSync("metadata.lsb", metadata.toString());
 You can read an existing metadata from the string/object.
 
 ```js
-const { CreateMetadata } = require("pa-meta");
+const { Metadata } = require("pa-meta");
 const fs = require("fs");
 
 const jsonString = fs.readFileSync("metadata.lsb", "utf8");
 const json = JSON.parse(jsonString);
-const metadata = CreateMetadata(json);
+const metadata = new Metadata();
+metadata.fromJson(json);
 ```
 
 ## Author
@@ -373,7 +329,7 @@ Give a ⭐️ if this project helped you!
 
 ## 📝 License
 
-Copyright © 2022 [PA Toolkit](https://github.com/PA-Toolkit).<br />
+Copyright © 2023 [PA Toolkit](https://github.com/PA-Toolkit).<br />
 This project is [MIT](https://github.com/PA-Toolkit/pa-meta/blob/master/LICENSE) licensed.
 
 ---

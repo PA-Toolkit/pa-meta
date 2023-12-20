@@ -1,42 +1,13 @@
-/*
-  Metadata generator test.
-*/
-const {
-  CreateMetadata,
-  LinkType,
-  CreateBeatmap,
-  CreateSong,
-  Difficulty,
-  CreateCreator,
-} = require("..");
 const fs = require("fs");
+const { Metadata } = require("..");
 
-// Create new metadata, leaving unassigned fields to default.
-const metadata = CreateMetadata({
-  artist: {
-    name: "Test Artist",
-    link: "testArtist",
-    linkType: LinkType.Spotify,
-  },
-  beatmap: CreateBeatmap({
-    // Assigning using Beatmap fields
-    dateEdited: Date.now(),
-    // Assigning using serialized fields
-    game_version: "20.4.4",
-  }),
+const metadata = new Metadata({
+  artist: require("./artist.test")(),
+  beatmap: require("./beatmap.test")(),
 });
 
-// Assigning Creator using helper.
-metadata.creator = CreateCreator({
-  steamName: "Test Creator",
-});
-
-// Assigning Song directly.
-metadata.song = {
-  title: "Test Song",
-  difficulty: Difficulty.Easy,
-  description: "Test Description",
-};
+metadata.creator = require("./creator.test")();
+metadata.song = require("./song.test")();
 
 // Write test.
 if (!fs.existsSync("test/result")) {
@@ -48,7 +19,8 @@ fs.writeFileSync("test/result/metadata.lsb", metadata.toString(), {
 
 // Read test.
 const jsonString = fs.readFileSync("test/result/metadata.lsb", "utf-8");
-const readMetadata = CreateMetadata(JSON.parse(jsonString));
+const readMetadata = new Metadata();
+readMetadata.fromJson(JSON.parse(jsonString));
 
 console.log(
   readMetadata.toString() == jsonString ? "Test passed!" : "Test failed!"

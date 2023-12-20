@@ -1,92 +1,62 @@
 import { Serializable } from "pa-common";
-import { Artist, ArtistConstructor, CreateArtist } from "./artist";
-import { Beatmap, BeatmapConstructor } from "./beatmap";
-import { CreateBeatmap } from "./beatmap/Helpers";
-import { CreateCreator, Creator, CreatorConstructor } from "./creator";
-import { MetadataConstructor } from "./MetadataConstructor";
-import { CreateSong, Song, SongConstructor } from "./song";
+import { MetadataParams } from "./MetadataParams";
+import { Artist } from "./artist";
+import { Beatmap } from "./beatmap";
+import { Creator } from "./creator";
+import { Song } from "./song";
 
 /**
  * The metadata of the Project Arrhythmia level, the base of the library.
  */
 export class Metadata implements Serializable {
-  private _artist: Artist = CreateArtist();
-  private _creator: Creator = CreateCreator();
-  private _song: Song = CreateSong();
-  private _beatmap: Beatmap = CreateBeatmap();
-
   /**
    * The song's artist.
    */
-  public get artist(): Artist {
-    return this._artist;
-  }
-
-  public set artist(value: Artist | ArtistConstructor) {
-    this._artist.fromJson(value);
-  }
+  artist: Artist = new Artist();
 
   /**
    * The creator of the level.
    */
-  public get creator(): Creator {
-    return this._creator;
-  }
-
-  public set creator(value: Creator | CreatorConstructor) {
-    this._creator.fromJson(value);
-  }
+  creator: Creator = new Creator();
 
   /**
-   * The song of the level, which also contains most of the information about the level itself.
+   * The song of the level, which also contains some of the information about the level itself.
    */
-  public get song(): Song {
-    return this._song;
-  }
-
-  public set song(value: Song | SongConstructor) {
-    this._song.fromJson(value);
-  }
+  song: Song = new Song();
 
   /**
    * The level's beatmap data.
    */
-  public get beatmap(): Beatmap {
-    return this._beatmap;
-  }
+  beatmap: Beatmap = new Beatmap();
 
-  public set beatmap(value: Beatmap | BeatmapConstructor) {
-    this._beatmap.fromJson(value);
-  }
-
-  fromJson(json: MetadataConstructor) {
+  fromJson(json: any) {
     if (json.artist) {
-      this._artist.fromJson(json.artist);
+      this.artist.fromJson(json.artist);
     }
     if (json.creator) {
-      this._creator.fromJson(json.creator);
+      this.creator.fromJson(json.creator);
     }
     if (json.song) {
-      this._song.fromJson(json.song);
+      this.song.fromJson(json.song);
     }
     if (json.beatmap) {
-      this._beatmap.fromJson(json.beatmap);
+      this.beatmap.fromJson(json.beatmap);
     }
   }
 
-  toJson(): MetadataConstructor {
-    const json = {} as MetadataConstructor;
+  toJson(): any {
+    const json: { [key: string]: any } = {};
     if (this.artist) {
-      json.artist = this._artist.toJson();
+      json.artist = this.artist.toJson();
     }
     if (this.creator) {
-      json.creator = this._creator.toJson();
+      json.creator = this.creator.toJson();
     }
     if (this.song) {
-      json.song = this._song.toJson();
+      json.song = this.song.toJson();
     }
     if (this.beatmap) {
-      json.beatmap = this._beatmap.toJson();
+      json.beatmap = this.beatmap.toJson();
     }
     return json;
   }
@@ -95,7 +65,14 @@ export class Metadata implements Serializable {
     return JSON.stringify(this.toJson());
   }
 
-  constructor(json: MetadataConstructor) {
-    this.fromJson(json);
+  constructor(params?: MetadataParams) {
+    if (params) {
+      this.fromJson({
+        artist: params.artist?.toJson(),
+        creator: params.creator?.toJson(),
+        song: params.song?.toJson(),
+        beatmap: params.beatmap?.toJson(),
+      });
+    }
   }
 }
