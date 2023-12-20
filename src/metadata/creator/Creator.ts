@@ -36,7 +36,7 @@ export class Creator implements Serializable {
   toJson(): any {
     return {
       steam_name: this.steamName,
-      steam_id: this.steamId.toString(),
+      steam_id: this.steamId?.toString(),
     };
   }
 

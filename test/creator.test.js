@@ -1,6 +1,6 @@
-const { Creator } = require("../build");
+const { Creator } = require("..");
 
-module.exports = function testArtist() {
+module.exports = function () {
   const creator = new Creator({
     steamName: "Creator Name",
     steamId: 212345678,

@@ -8,7 +8,7 @@ export enum Difficulty {
   Expert = 3,
   ExpertPlus = 4,
   /**
-   * @deprecated
+   * @deprecated This difficulty was introduced in the `dev` branch, but was eventually removed.
    */
   Master = 5,
 }

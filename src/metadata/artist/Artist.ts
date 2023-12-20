@@ -26,7 +26,7 @@ export class Artist implements Serializable {
       this.fromJson({
         name: params.name,
         link: params.link,
-        linkType: params.linkType.toString(),
+        linkType: params.linkType?.toString(),
       });
     }
   }
@@ -71,7 +71,7 @@ export class Artist implements Serializable {
     return {
       name: this.name,
       link: this.link,
-      linkType: this.linkType.toString(),
+      linkType: this.linkType?.toString(),
     };
   }
 

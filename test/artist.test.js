@@ -1,6 +1,6 @@
 const { Artist, LinkType } = require("..");
 
-module.exports = function testArtist() {
+module.exports = function () {
   const artist = new Artist({
     name: "Artist Name",
     link: "artist-name",
